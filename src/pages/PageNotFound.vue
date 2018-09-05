@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h1>
+  <div class="col-full" :class="$style.centered">
+    <h1 :class="$style.headingLarge">
       Not found
     </h1>
-    <p>
+    <p :class="$style.textLarge">
       Ooops, we couldn't find what you are looking for. Why don't you
       <router-link :to="{name:'Home'}">
         go home instead?
@@ -19,15 +19,15 @@
   }
 </script>
 
-<style scoped>
-  h1 {
+<style module>
+  .headingLarge {
     font-size: 6rem;
   }
-  p {
+  .textLarge {
     font-size: 3.5rem;
     font-weight: 100;
   }
-  div {
+  .centered {
     text-align: center;
   }
 </style>
