@@ -21,7 +21,7 @@
 
 <script>
   import ThreadList from '@/components/ThreadList'
-  import sourseData from '@/data'
+  import sourceData from '@/data'
   export default {
     name: 'PageForumShow',
     components: {
@@ -35,10 +35,10 @@
     },
     computed: {
       forum () {
-        return sourseData.forums[this.id]
+        return sourceData.forums[this.id]
       },
       threads () {
-        return Object.values(sourseData.threads).filter(thread => thread.forumId === this.id)
+        return Object.values(sourceData.threads).filter(thread => thread.forumId === this.id)
       }
     }
   }
