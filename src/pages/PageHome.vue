@@ -10,22 +10,16 @@
 </template>
 
 <script>
-import sourceData from '@/data'
-import ForumList from '@/components/ForumList'
 import CategoryList from '@/components/CategoryList'
 
 export default {
   name: 'PageHome',
   components: {
-    ForumList,
     CategoryList
   },
-  data () {
-    return {
-      forums: Object.values(sourceData.forums),
-      categories: Object.values(sourceData.categories),
-      posts: sourceData.posts,
-      users: sourceData.users
+  computed: {
+    categories () {
+      return Object.values(this.$store.state.categories)
     }
   }
 }
