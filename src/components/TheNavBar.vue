@@ -21,7 +21,7 @@
             <img class="avatar-small" :src="user.avatar" alt="">
             <span>
                 {{user.name}}
-                <img class="icon-profile" src="assets/img/svg/arrow-profile.svg" alt="">
+                <img class="icon-profile" src="../assets/img/arrow-profile.svg" alt="">
             </span>
           </router-link>
 
