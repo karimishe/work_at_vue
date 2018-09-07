@@ -21,7 +21,7 @@
 
 
         <div class="stats">
-          <span>{{userPostCount}} posts</span>
+          <span>{{userPostsCount}} posts</span>
           <span>{{userTreadsCount}} threads</span>
         </div>
 
@@ -60,6 +60,8 @@
   import PostList from '@/components/PostList'
   import {mapGetters} from 'vuex'
 
+  import {countObjectsProperties} from '@/utils'
+
   export default {
     name: 'PageProfile',
     components: {
@@ -70,14 +72,10 @@
         user: 'authUser'
       }),
       userTreadsCount () {
-        return this.user.threads
-          ? Object.keys(this.user.threads).length
-          : 0
+        return countObjectsProperties(this.user.threads)
       },
       userPostsCount () {
-        return this.user.posts
-          ? Object.keys(this.user.posts).length
-          : 0
+        return countObjectsProperties(this.user.posts)
       },
       userPosts () {
         if (this.user.posts) {
