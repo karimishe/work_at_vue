@@ -4,14 +4,10 @@
     <UserProfileCard
       v-if="!edit"
       :user="user"
-      :userPostsCount="userPostsCount"
-      :userThreadsCount="userThreadsCount"
     />
     <UserProfileCardEditor
       v-else
       :user="user"
-      :userPostsCount="userPostsCount"
-      :userThreadsCount="userThreadsCount"
     />
 
     <div class="col-7 push-top">
@@ -36,8 +32,6 @@
   import UserProfileCard from '@/components/UserProfileCard'
   import UserProfileCardEditor from '@/components/UserProfileCardEditor'
 
-  import {countObjectsProperties} from '@/utils'
-
   export default {
     name: 'PageProfile',
     components: {
@@ -55,12 +49,6 @@
       ...mapGetters({
         user: 'authUser'
       }),
-      userThreadsCount () {
-        return countObjectsProperties(this.user.threads)
-      },
-      userPostsCount () {
-        return countObjectsProperties(this.user.posts)
-      },
       userPosts () {
         if (this.user.posts) {
           return Object.values(this.$store.state.posts)
