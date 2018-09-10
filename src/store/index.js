@@ -15,6 +15,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+
     createPost ({commit, state}, post) {
       const postId = 'greatPost' + Math.random()
       post['.key'] = postId
@@ -25,6 +26,7 @@ export default new Vuex.Store({
       commit('appendPostToThread', {postId, threadId: post.threadId})
       commit('appendPostToUser', {postId, userId: post.userId})
     },
+
     createThread ({state, commit, dispatch}, {text, title, forumId}) {
       return new Promise((resolve, reject) => {
         const threadId = 'greatThread' + Math.random()
@@ -41,6 +43,15 @@ export default new Vuex.Store({
         resolve(state.threads[threadId])
       })
     },
+
+    updatePost ({state, commit}, {id, text}) {
+      return new Promise((resolve, reject) => {
+        const post = state.posts[id]
+        commit('setPost', {postId: id, post: {...post, text}})
+        resolve(post)
+      })
+    },
+
     updateUser ({commit}, user) {
       commit('setUser', {userId: user['.key'], user})
     }
