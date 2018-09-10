@@ -27,7 +27,12 @@
         required: false
       },
       post: {
-        type: Object
+        type: Object,
+        validator: obj => {
+          const keyIsValid = typeof obj['.key'] === 'string'
+          const textIsValid = typeof obj.text === 'string'
+          return keyIsValid && textIsValid
+        }
       }
     },
     data () {
