@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import sourceData from '@/data'
+import firebase from 'firebase'
 import { countObjectsProperties } from '@/utils'
 
 Vue.use(Vuex)
@@ -16,12 +16,17 @@ const makeAppendChildToParentMutatuion = ({parent, child}) =>
 
 export default new Vuex.Store({
   state: {
-    ...sourceData,
+    categories: {},
+    forums: {},
+    threads: {},
+    posts: {},
+    users: {},
     authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
   },
   getters: {
     authUser (state) {
-      return state.users[state.authId]
+      // return state.users[state.authId]
+      return {}
     },
     userPostsCount: state => id => countObjectsProperties(state.users[id].posts),
     userThreadsCount: state => id => countObjectsProperties(state.users[id].threads),
@@ -93,6 +98,34 @@ export default new Vuex.Store({
     },
     updateUser ({commit}, user) {
       commit('setUser', {userId: user['.key'], user})
+    },
+
+    fetchThread ({dispatch}, {id}) {
+      return dispatch('fetchItem', {resource: 'threads', id})
+    },
+    fetchPost ({dispatch}, {id}) {
+      return dispatch('fetchItem', {resource: 'posts', id})
+    },
+    fetchUser ({dispatch}, {id}) {
+      return dispatch('fetchItem', {resource: 'users', id})
+    },
+
+    fetchPosts ({dispatch}, {ids}) {
+      return dispatch('fetchItems', {resource: 'posts', ids})
+    },
+
+    fetchItem ({state, commit}, {id, resource}) {
+      console.log('go fire base for threads', id)
+      return new Promise((resolve, reject) => {
+        firebase.database().ref(resource).child(id).once('value', snapshot => {
+          commit('setItem', {resource, id: snapshot.key, item: snapshot.val()})
+          resolve(state[resource][id])
+        })
+      })
+    },
+
+    fetchItems ({dispatch}, {ids, resource}) {
+      return Promise.all(ids.map(id => dispatch('fetchItem', {id, resource})))
     }
   },
   mutations: {
@@ -104,6 +137,10 @@ export default new Vuex.Store({
     },
     setThread (state, {thread, threadId}) {
       Vue.set(state.threads, threadId, thread)
+    },
+    setItem (state, {item, id, resource}) {
+      item['.key'] = id
+      Vue.set(state[resource], id, item)
     },
     appendPostToThread: makeAppendChildToParentMutatuion({parent: 'threads', child: 'posts'}),
 
