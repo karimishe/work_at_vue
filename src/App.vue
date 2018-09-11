@@ -2,7 +2,8 @@
   <div id="app">
     <TheNavBar/>
     <div class="container">
-      <router-view/>
+      <router-view v-show="showPage" @ready="showPage = true"/>
+      <div v-show="!showPage" >loading...</div>
     </div>
   </div>
 </template>
@@ -14,6 +15,17 @@
     name: 'app',
     components: {
       TheNavBar
+    },
+    data () {
+      return {
+        showPage: false
+      }
+    },
+    created () {
+      this.$router.beforeEach((to, from, next) => {
+        this.showPage = false
+        next()
+      })
     }
   }
 </script>
