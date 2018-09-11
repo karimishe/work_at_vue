@@ -25,6 +25,8 @@ export default {
   },
   appendPostToThread: makeAppendChildToParentMutatuion({parent: 'threads', child: 'posts'}),
 
+  appendContributorToThread: makeAppendChildToParentMutatuion({parent: 'threads', child: 'contributors'}),
+
   appendPostToUser: makeAppendChildToParentMutatuion({parent: 'users', child: 'posts'}),
 
   appendThreadToForum: makeAppendChildToParentMutatuion({parent: 'forums', child: 'threads'}),
