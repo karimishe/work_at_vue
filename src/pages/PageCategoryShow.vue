@@ -1,5 +1,5 @@
 <template>
-  <div v-if="category" class="category-wrapper">
+  <div v-if="asyncDataStatus_ready" class="category-wrapper">
     <div class="col-full push-top">
       <h1>{{category.name}}</h1>
     </div>
@@ -11,6 +11,7 @@
 
 <script>
   import CategoryListItem from '@/components/CategoryListItem'
+  import asyncDataStatus from '@/mixins/asyncDataStatus'
 
   export default {
     name: 'PageCategoryShow',
@@ -23,6 +24,7 @@
         type: String
       }
     },
+    mixins: [asyncDataStatus],
     computed: {
       category () {
         return this.$store.state.categories[this.id]
@@ -30,9 +32,9 @@
     },
     created () {
       this.$store.dispatch('fetchCategory', {id: this.id})
-        .then(category => {
-          this.$store.dispatch('fetchForums', {ids: category.forums})
-        })
+        .then(category => this.$store.dispatch('fetchForums', {ids: category.forums})
+          .then(() => { this.asyncDataStatus_fetched() })
+        )
     }
   }
 </script>
