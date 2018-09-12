@@ -37,20 +37,21 @@ const router = new Router({
       path: '/thread/create/:forumId',
       name: 'ThreadCreate',
       component: ThreadCreate,
-      props: true
+      props: true,
+      meta: { requiresAuth: true }
     },
     {
       path: '/thread/:id',
       name: 'ThreadShow',
       component: ThreadShow,
-      props: true,
-      meta: { requiresAuth: true }
+      props: true
     },
     {
       path: '/thread/:id/edit',
       name: 'ThreadEdit',
       component: ThreadEdit,
-      props: true
+      props: true,
+      meta: { requiresAuth: true }
     },
     {
       path: '/me',
@@ -63,21 +64,25 @@ const router = new Router({
       path: '/me/edit',
       name: 'ProfileEdit',
       component: Profile,
-      props: {edit: true}
+      props: {edit: true},
+      meta: { requiresAuth: true }
     },
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: { requiresGuest: true }
     },
     {
       path: '/signin',
       name: 'SignIn',
-      component: SignIn
+      component: SignIn,
+      meta: { requiresGuest: true }
     },
     {
       path: '/logout',
       name: 'SignOut',
+      meta: { requiresAuth: true },
       beforeEnter (to, from, next) {
         store.dispatch('signOut')
           .then(() => next({name: 'Home'}))
@@ -97,6 +102,12 @@ router.beforeEach((to, from, next) => {
     .then(user => {
       if (to.matched.some(route => route.meta.requiresAuth)) {
         if (user) {
+          next()
+        } else {
+          next({name: 'SignIn', query: {redirectTo: to.path}})
+        }
+      } else if (to.matched.some(route => route.meta.requiresGuest)) {
+        if (!user) {
           next()
         } else {
           next({name: 'Home'})
