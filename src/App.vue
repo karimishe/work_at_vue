@@ -2,7 +2,7 @@
   <div id="app">
     <TheNavBar/>
     <div class="container">
-      <router-view v-show="showPage" @ready="showPage = true"/>
+      <router-view :key="$route.path" v-show="showPage" @ready="showPage = true"/>
       <AppSpinner v-show="!showPage"/>
     </div>
   </div>
