@@ -12,8 +12,10 @@ export default {
         console.log('the user has changed')
         if (user) {
           dispatch('fetchAuthUser')
+            .then(dbUser => resolve(dbUser))
+        } else {
+          resolve(null)
         }
-        resolve(user)
       })
       commit('setUnsubscribeAuthObserver', unsubsctibe)
     })
