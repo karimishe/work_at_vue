@@ -1,6 +1,24 @@
 import firebase from 'firebase'
 
 export default {
+  initAuthentication ({dispatch, commit, state}) {
+    return new Promise((resolve, reject) => {
+      // unsubscribe observer if already listening
+      if (state.unsubscribeAuthObserver) {
+        state.unsubscribeAuthObserver()
+      }
+
+      const unsubsctibe = firebase.auth().onAuthStateChanged(user => {
+        console.log('the user has changed')
+        if (user) {
+          dispatch('fetchAuthUser')
+        }
+        resolve(user)
+      })
+      commit('setUnsubscribeAuthObserver', unsubsctibe)
+    })
+  },
+
   createPost ({commit, state}, post) {
     const postId = firebase.database().ref('posts').push().key
     post.userId = state.authId
