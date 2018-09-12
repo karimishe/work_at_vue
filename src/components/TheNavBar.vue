@@ -14,9 +14,8 @@
 
     <!-- use .navbar-open to open nav -->
     <nav class="navbar">
-      <ul>
-
-        <li class="navbar-user" v-if="user">
+      <ul v-if="user">
+        <li class="navbar-user">
           <router-link :to="{name: 'Profile'}">
             <img class="avatar-small" :src="user.avatar" alt="">
             <span>
@@ -35,28 +34,15 @@
             </ul>
           </div>
         </li>
+        <li class="navbar-item"><a @click.prevent="$store.dispatch('signOut')">SignOut</a></li>
       </ul>
-
-<!--      <ul>
+      <ul v-else>
         <li class="navbar-item">
-          <a href="index.html">Home</a>
-        </li>
-        <li class="navbar-item">
-          <a href="category.html">Category</a>
+          <router-link :to="{name: 'SignIn'}">Sign In</router-link>
         </li>
         <li class="navbar-item">
-          <a href="forum.html">Forum</a>
+          <router-link :to="{name: 'Register'}">Register</router-link>
         </li>
-        <li class="navbar-item">
-          <a href="thread.html">Thread</a>
-        </li>
-        &lt;!&ndash; Show these option only on mobile&ndash;&gt;
-        <li class="navbar-item mobile-only">
-          <a href="profile.html">My Profile</a>
-        </li>
-        <li class="navbar-item mobile-only">
-          <a href="#">Logout</a>
-        </li>-->
       </ul>
     </nav>
   </header>

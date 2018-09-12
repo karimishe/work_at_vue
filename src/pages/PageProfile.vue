@@ -56,6 +56,9 @@
         }
         return []
       }
+    },
+    created () {
+      this.$emit('ready')
     }
   }
 </script>

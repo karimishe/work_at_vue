@@ -70,8 +70,18 @@ export default {
   registerUserWithEmailAndPassword ({dispatch}, {email, name, username, password, avatar = null}) {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(resp => {
-        console.log(resp.user)
-        dispatch('createUser', {id: resp.user.uid, email, name, username, password, avatar})
+        return dispatch('createUser', {id: resp.user.uid, email, name, username, password, avatar})
+      })
+  },
+
+  signInWithEmailAndPassword (context, {email, password}) {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+  },
+
+  signOut ({commit}) {
+    return firebase.auth().signOut()
+      .then(() => {
+        commit('setAuthId', null)
       })
   },
 
@@ -115,6 +125,14 @@ export default {
   },
   updateUser ({commit}, user) {
     commit('setUser', {userId: user['.key'], user})
+  },
+
+  fetchAuthUser ({dispatch, commit}) {
+    const userId = firebase.auth().currentUser.uid
+    return dispatch('fetchUser', {id: userId})
+      .then(() => {
+        commit('setAuthId', userId)
+      })
   },
 
   fetchCategory: ({dispatch}, {id}) => dispatch('fetchItem', {resource: 'categories', id}),
