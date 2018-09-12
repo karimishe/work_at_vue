@@ -15,8 +15,13 @@
     </p>
     <PostList :posts="posts"/>
     <PostEditor
+      v-if="authUser"
       :threadId="id"
     />
+    <div v-else class="text-center" style="margin-bottom: 50px">
+      <router-link :to="{name: 'SignIn', query: {redirectTo: $route.path}}">Sign in</router-link> or
+      <router-link :to="{name: 'Register', query: {redirectTo: $route.path}}">Register</router-link> to post a reply
+    </div>
   </div>
 </template>
 
@@ -26,6 +31,7 @@
   import PostEditor from '@/components/PostEditor'
   import { countObjectsProperties } from '@/utils'
   import asyncDataStatus from '@/mixins/asyncDataStatus'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'ThreadShow',
@@ -41,6 +47,9 @@
     },
     mixins: [asyncDataStatus],
     computed: {
+      ...mapGetters({
+        authUser: 'authUser'
+      }),
       posts () {
         const postIds = Object.values(this.thread.posts)
         return Object.values(this.$store.state.posts).filter(post => postIds.includes(post['.key']))
