@@ -1,4 +1,4 @@
-const countObjectsProperties = obj => {
+const countObjectProperties = obj => {
   if (typeof obj === 'object') {
     return Object.keys(obj).length
   }
@@ -16,6 +16,6 @@ const removeEmptyProperties = obj => {
 }
 
 export {
-  countObjectsProperties,
+  countObjectProperties,
   removeEmptyProperties
 }

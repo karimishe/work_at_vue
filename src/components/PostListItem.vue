@@ -68,7 +68,7 @@
     },
     computed: {
       user () {
-        return this.$store$store.state.users.items[this.post.userId]
+        return this.$store.state.users.items[this.post.userId]
       },
       userPostsCount () {
         return this.$store.getters['users/userPostsCount'](this.post.userId)

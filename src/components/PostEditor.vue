@@ -62,14 +62,14 @@
         this.$emit('save', {post})
 
         this.text = ''
-        return this.$store.dispatch('createPost', post)
+        return this.$store.dispatch('posts/createPost', post)
       },
       update () {
         const payload = {
           id: this.post['.key'],
           text: this.text
         }
-        return this.$store.dispatch('updatePost', payload)
+        return this.$store.dispatch('posts/updatePost', payload)
       },
       persist () {
         return (this.isUpdate ? this.update() : this.create())

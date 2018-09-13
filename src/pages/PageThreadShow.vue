@@ -29,7 +29,7 @@
   import firebase from 'firebase'
   import PostList from '@/components/PostList'
   import PostEditor from '@/components/PostEditor'
-  import { countObjectsProperties } from '@/utils'
+  import { countObjectProperties } from '@/utils'
   import asyncDataStatus from '@/mixins/asyncDataStatus'
   import { mapGetters } from 'vuex'
 
@@ -52,13 +52,13 @@
       }),
       posts () {
         const postIds = Object.values(this.thread.posts)
-        return Object.values(this.$store.state.posts.itmes).filter(post => postIds.includes(post['.key']))
+        return Object.values(this.$store.state.posts.items).filter(post => postIds.includes(post['.key']))
       },
       repliesCount () {
         return this.$store.getters['threads/threadRepliesCount'](this.thread['.key'])
       },
       contributorsCount () {
-        return countObjectsProperties(this.thread.contributors)
+        return countObjectProperties(this.thread.contributors)
       },
       user () {
         return this.$store.state.users.items[this.thread.userId]
