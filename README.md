@@ -8,6 +8,9 @@
 # install dependencies
 npm install
 
+# starting with hot reload with yarn at localhost:8080
+yarn start
+
 # serve with hot reload at localhost:8080
 npm run dev
 
@@ -17,5 +20,4 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Watch on GitHub pages - https://karimishe.github.io/work_at_vue/
