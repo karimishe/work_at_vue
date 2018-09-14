@@ -26,7 +26,6 @@
 </template>
 
 <script>
-  import firebase from 'firebase'
   import PostList from '@/components/PostList'
   import PostEditor from '@/components/PostEditor'
   import { countObjectProperties } from '@/utils'
