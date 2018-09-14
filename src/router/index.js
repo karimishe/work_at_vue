@@ -17,6 +17,10 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     {
+      path: '/work_at_vue/',
+      redirectTo: '/'
+    },
+    {
       path: '/',
       name: 'Home',
       component: Home
